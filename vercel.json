@@ -1,10 +1,15 @@
 {
   "version": 2,
-
-  "routes": [
+  "builds": [
     {
-      "src": "/(.*)",
-      "dest": "dist/main.js"
+      "src": "dist/main.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "dist/main.js"
     }
   ]
 }
