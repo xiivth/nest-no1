@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run start:prod",
+  "buildCommand": "@vercel/node dist/main.js",
   "rewrites": [
     {
       "source": "/(.*)",
