@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "nest build && npm run start:prod",
+  "buildCommand": "npm run start:prod",
   "rewrites": [
     {
       "source": "/(.*)",
