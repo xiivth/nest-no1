@@ -2,7 +2,7 @@
   "functions": {
     "api/**/*.ts": {
       "maxDuration": 60,
-      "includeFiles": "api/contract/**/*"
+      "includeFiles": "api/contracts/**/*"
     }
   },
   "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
