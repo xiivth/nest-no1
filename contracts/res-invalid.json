@@ -1,0 +1,22 @@
+{
+  "certificateUUID": "41d2ebe3-8fb2-4778-839c-7d5f35188cc3",
+  "certificateJson": {
+    "recipientName": "azx",
+    "recipientEmail": "b@c.d",
+    "course": "หลักสูตรที่ ศูนย์ศูนย์สอง",
+    "instituteName": "สถาบันที่ศูนย์หนึ่ง",
+    "issueDate": "20240501",
+    "expireDate": "20240601",
+    "layoutId": "std02",
+    "courseId": "665aebc346809ba9518e3263",
+    "instituteId": "665ad5c86f5327a67c7c9d09"
+  },
+  "certificateHash": "0xfbc8844550bc110cd8efe02f8fbb7e5e9d7f911764129b76609e08a8f5421a28",
+  "signature": {
+    "root": "0x8e2d2f99cc9167b0e4226ef12e1b9871660b63249dcf855510ddbfa8e16bad95",
+    "proofs": [
+      "0xd277aa0cb50fbd4c9bf49b7d0f61bbda98a2826f96ef44d08999b110eabeee92"
+    ],
+    "leaf": "0xfbc8844550bc110cd8efe02f8fbb7e5e9d7f911764129b76609e08a8f5421a27"
+  }
+}

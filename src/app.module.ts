@@ -4,11 +4,12 @@ import { AppService } from './app.service';
 import { CatsController } from './cats/cats.controller';
 import { CatsService } from './cats/cats.service';
 import { EthersModule } from './shared/ethers/ethers.module';
-import { EthersService } from './shared/ethers/ethers.service';
+import { ConfigModule } from '@nestjs/config';
+import { CertificatesModule } from './certificates/certificates.module';
 
 @Module({
-  imports: [EthersModule],
+  imports: [ConfigModule.forRoot(), EthersModule, CertificatesModule],
   controllers: [AppController, CatsController],
-  providers: [AppService, CatsService, EthersService],
+  providers: [AppService, CatsService],
 })
 export class AppModule {}
