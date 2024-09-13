@@ -139,7 +139,7 @@ export class EthersService implements OnModuleInit {
     } catch (error) {
       console.error('==== sendContractTransaction ====\n', error);
       // throw new Error('Transaction failed');
-      throw new Error(error.reason || 'Transaction failed');
+      throw new Error(error.reason || error.message);
     }
   }
 }
