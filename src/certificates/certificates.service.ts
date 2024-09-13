@@ -72,16 +72,17 @@ export class CertificatesService {
   }
 
   async issue(maxTransactionFee: string, root: string): Promise<string> {
-    try {
-      const transactionHash = await this.ethersService.sendContractTransaction(
-        'addRoot',
-        maxTransactionFee,
-        root,
-      );
-      return transactionHash;
-    } catch (error) {
-      throw new Error(error);
-      // return JSON.parse(`{"error": "${error}"}`);
-    }
+    // try {
+    const transactionHash = await this.ethersService.sendContractTransaction(
+      'addRoot',
+      maxTransactionFee,
+      root,
+    );
+    return transactionHash;
+    // } catch (error) {
+    //   throw error;
+    // throw new Error('error');
+    // return JSON.parse(`{"error": "${error}"}`);
+    // }
   }
 }

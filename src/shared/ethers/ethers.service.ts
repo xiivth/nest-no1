@@ -80,7 +80,7 @@ export class EthersService implements OnModuleInit {
       return result;
     } catch (error) {
       console.error('Error readContractData: ', error);
-      throw new Error(error.reason);
+      throw new Error(error.reason || error);
     }
   }
 
@@ -138,7 +138,8 @@ export class EthersService implements OnModuleInit {
       return receipt.hash;
     } catch (error) {
       console.error('==== sendContractTransaction ====\n', error);
-      throw new Error('Transaction failed');
+      // throw new Error('Transaction failed');
+      throw new Error(error.reason || 'Transaction failed');
     }
   }
 }

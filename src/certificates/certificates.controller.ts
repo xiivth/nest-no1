@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  NotImplementedException,
 } from '@nestjs/common';
 import { CertificatesService } from './certificates.service';
 import { CreateCertificateDto } from './dto/create-certificate.dto';
@@ -49,11 +50,19 @@ export class CertificatesController {
     return this.certificatesService.remove(+id);
   }
 
-  @Post('issues')
+  @Post('issue')
   async issue(@Query() query: any) {
-    return await this.certificatesService.issue(
-      query.maxTransactionFee,
-      query.root,
-    );
+    try {
+      const hash = await this.certificatesService.issue(
+        query.maxTransactionFee,
+        query.root,
+      );
+      if (!hash) {
+        throw new NotImplementedException();
+      }
+      return hash;
+    } catch (error) {
+      throw new NotImplementedException(error.message);
+    }
   }
 }
