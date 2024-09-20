@@ -5,9 +5,10 @@ import { CatsController } from './cats/cats.controller';
 import { CatsService } from './cats/cats.service';
 import { ConfigModule } from '@nestjs/config';
 import { CertificatesModule } from './certificates/certificates.module';
+import { EthersModule } from './shared/ethers/ethers.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), CertificatesModule],
+  imports: [ConfigModule.forRoot(), EthersModule, CertificatesModule],
   controllers: [AppController, CatsController],
   providers: [AppService, CatsService],
 })
