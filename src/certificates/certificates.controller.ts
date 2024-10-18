@@ -19,6 +19,7 @@ export class CertificatesController {
 
   @Post()
   create(@Body() createCertificateDto: CreateCertificateDto) {
+    console.log(createCertificateDto);
     return this.certificatesService.create(createCertificateDto);
   }
 

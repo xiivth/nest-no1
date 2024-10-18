@@ -4,14 +4,20 @@ import { UpdateCertificateDto } from './dto/update-certificate.dto';
 import { readFileSync } from 'fs';
 import { createHash } from 'crypto';
 import { EthersService } from 'src/shared/ethers/ethers.service';
+import { PrismaService } from 'src/shared/prisma/prisma.service';
 
 @Injectable()
 export class CertificatesService {
-  constructor(private readonly ethersService: EthersService) {}
+  constructor(
+    private readonly ethersService: EthersService,
+    private readonly prismaService: PrismaService,
+  ) {}
 
   create(createCertificateDto: CreateCertificateDto) {
     console.log(createCertificateDto);
-    return 'This action adds a new certificate';
+    return this.prismaService.institutes.create({
+      data: createCertificateDto,
+    });
   }
 
   findAll() {
