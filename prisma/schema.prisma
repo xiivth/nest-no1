@@ -7,152 +7,92 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-type CertificatesSignature {
+
+model Certificates {
+  id                   String    @id @default(auto()) @map("_id") @db.ObjectId
+  certificateUUID      String    @unique
+  certificateHash      String    @unique
+  certificateJson      String
+  certificateNo        String?
+  courseName           String
+  recipientName        String
+  recipientEmail       String
+  instituteId          String    @db.ObjectId
+  certificateSignature Signature
+  issuerId             String    @db.ObjectId
+  issueDate            DateTime
+  batchId              String?
+  transactionHash      String?
+  certificateRevoked   Boolean   @default(false)
+  createdBy            String    @db.ObjectId
+  createdAt            DateTime  @default(now())
+  updatedBy            String    @db.ObjectId
+  updatedAt            DateTime  @updatedAt
+}
+
+type Signature {
   leaf   String
   proofs String[]
   root   String
 }
 
-type CertificatetreesTreeDumpData {
+model Certificatetrees {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  root            String    @unique
+  treeDumpData    TreeDump
+  transactionHash String?
+  transactionDate DateTime?
+  revoked         Boolean  @default(false)
+  revokedDate     DateTime?
+  createdBy       String   @db.ObjectId
+  createdAt       DateTime @default(now())
+  updatedBy       String   @db.ObjectId
+  updatedAt       DateTime @updatedAt
+}
+
+type TreeDump {
   format       String
   leafEncoding String[]
   tree         String[]
-  values       CertificatetreesTreeDumpDataValues[]
+  values       TreeDumpValues[] 
 }
 
-type CertificatetreesTreeDumpDataValues {
+type TreeDumpValues {
   treeIndex Int
   value     String[]
 }
 
-type CerttemplatesTemplateValues {
-  name        String
-  orderNumber Int
-  type        String
-  value       String
-}
-
-type CoursesSignature {
-  contentType String
-  data        Bytes
-}
-
-model certificates {
-  id                 String                @id @default(auto()) @map("_id") @db.ObjectId
-  v                  Int                   @map("__v")
-  certificateHash    String                @unique(map: "certificateHash_1")
-  certificateId      String?
-  certificateJson    String
-  certificateRevoked Boolean
-  certificateUUID    String                @unique(map: "certificateUUID_1")
-  courseName         String
-  createdAt          DateTime              @db.Date
-  createdBy          String?               @db.ObjectId
-  firstName          String?
-  instituteId        String?               @db.ObjectId
-  instituteName      String?
-  issueBatchId       String
-  issueDate          String?
-  issuerId           String                @db.ObjectId
-  lastName           String?
-  recipientEmail     String
-  recipientName      String?
-  signature          CertificatesSignature
-  titleName          String?
-  transactionHash    String?
-  treeRoot           String
-  updatedAt          DateTime              @db.Date
-
-  @@index([recipientEmail], map: "recipientEmail_1")
-  @@index([instituteName], map: "instituteName_1")
-  @@index([certificateId], map: "certificateId_1")
-  @@index([treeRoot], map: "treeRoot_1")
-}
-
-model certificatetrees {
-  id                    String                       @id @default(auto()) @map("_id") @db.ObjectId
-  v                     Int                          @map("__v")
-  createdAt             DateTime                     @db.Date
-  createdBy             String?                      @db.ObjectId
-  insertTransactionDate String?
-  root                  String                       @unique(map: "root_1")
-  rootRevoked           Boolean
-  transactionHash       String?
-  treeDumpData          CertificatetreesTreeDumpData
-  updatedAt             DateTime                     @db.Date
-
-  @@index([transactionHash], map: "transactionHash_1")
-}
-
-model certtemplates {
-  id             String                        @id @default(auto()) @map("_id") @db.ObjectId
-  v              Int                           @map("__v")
-  createdAt      DateTime                      @db.Date
-  templateValues CerttemplatesTemplateValues[]
-  updatedAt      DateTime                      @db.Date
-}
-
-model courses {
-  id               String            @id @default(auto()) @map("_id") @db.ObjectId
-  v                Int               @map("__v")
-  course           String
-  courseName       String?
-  createdAt        DateTime          @db.Date
-  createdBy        String            @db.ObjectId
-  dateOfExpireCert String?
-  dateOfStudyEnd   String?
-  dateOfStudyStart String?
-  instituteId      String            @db.ObjectId
-  instituteName    String?
-  issueDate        String?
-  issueStatus      String?
-  layoutId         String?
-  signName         String?
-  signature        CoursesSignature?
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  signatureArray   Json?
-  updatedAt        DateTime          @db.Date
-  updatedBy        String?           @db.ObjectId
-}
-
-model graduates {
-  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-  v                  Int      @map("__v")
-  certificateRevoked Boolean?
-  certificateUUID    String?
-  courseId           String   @db.ObjectId
-  createdAt          DateTime @db.Date
-  createdBy          String   @db.ObjectId
-  firstName          String?
-  instituteId        String   @db.ObjectId
-  lastName           String?
-  recipientEmail     String?
-  recipientName      String?
-  titleName          String?
-  updatedAt          DateTime @db.Date
-  updatedBy          String?  @db.ObjectId
-}
-
-model institutes {
+model Institutes {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  v             Int      @map("__v")
-  active        Boolean
-  createdAt     DateTime @db.Date
-  instituteAbbr String   @unique(map: "instituteAbbr_1")
-  instituteName String   @unique(map: "instituteName_1")
-  updatedAt     DateTime @db.Date
+  instituteName String   @unique
+  instituteAbbr String   @unique
+  active        Boolean  @default(true)
+  createdBy     String   @db.ObjectId
+  createdAt     DateTime @default(now())
+  updatedBy     String   @db.ObjectId
+  updatedAt     DateTime @updatedAt
+
+  users         Users[]
 }
 
-model users {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  v           Int      @map("__v")
-  active      Boolean
-  createdAt   DateTime @db.Date
-  email       String   @unique(map: "email_1")
-  instituteId String?  @db.ObjectId
-  name        String
+model Users {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  email       String      @unique
   password    String
-  role        String
-  updatedAt   DateTime @db.Date
   userName    String?
+  role        Role        @default(user)
+  instituteId String?     @db.ObjectId
+  active      Boolean     @default(true)
+  createdBy   String      @db.ObjectId
+  createdAt   DateTime    @default(now())
+  updatedBy   String      @db.ObjectId
+  updatedAt   DateTime    @updatedAt
+
+  institute   Institutes? @relation(fields: [instituteId], references: [id])
+}
+
+enum Role {
+  user
+  issuer
+  admin
 }

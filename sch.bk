@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type CertificatesSignature {
+  leaf   String
+  proofs String[]
+  root   String
+}
+
+type CertificatetreesTreeDumpData {
+  format       String
+  leafEncoding String[]
+  tree         String[]
+  values       CertificatetreesTreeDumpDataValues[]
+}
+
+type CertificatetreesTreeDumpDataValues {
+  treeIndex Int
+  value     String[]
+}
+
+type CerttemplatesTemplateValues {
+  name        String
+  orderNumber Int
+  type        String
+  value       String
+}
+
+type CoursesSignature {
+  contentType String
+  data        Bytes
+}
+
+model certificates {
+  id                 String                @id @default(auto()) @map("_id") @db.ObjectId
+  v                  Int                   @map("__v")
+  certificateHash    String                @unique(map: "certificateHash_1")
+  certificateId      String?
+  certificateJson    String
+  certificateRevoked Boolean
+  certificateUUID    String                @unique(map: "certificateUUID_1")
+  courseName         String
+  createdAt          DateTime              @db.Date
+  createdBy          String?               @db.ObjectId
+  firstName          String?
+  instituteId        String?               @db.ObjectId
+  instituteName      String?
+  issueBatchId       String
+  issueDate          String?
+  issuerId           String                @db.ObjectId
+  lastName           String?
+  recipientEmail     String
+  recipientName      String?
+  signature          CertificatesSignature
+  titleName          String?
+  transactionHash    String?
+  treeRoot           String
+  updatedAt          DateTime              @db.Date
+
+  @@index([recipientEmail], map: "recipientEmail_1")
+  @@index([instituteName], map: "instituteName_1")
+  @@index([certificateId], map: "certificateId_1")
+  @@index([treeRoot], map: "treeRoot_1")
+}
+
+model certificatetrees {
+  id                    String                       @id @default(auto()) @map("_id") @db.ObjectId
+  v                     Int                          @map("__v")
+  createdAt             DateTime                     @db.Date
+  createdBy             String?                      @db.ObjectId
+  insertTransactionDate String?
+  root                  String                       @unique(map: "root_1")
+  rootRevoked           Boolean
+  transactionHash       String?
+  treeDumpData          CertificatetreesTreeDumpData
+  updatedAt             DateTime                     @db.Date
+
+  @@index([transactionHash], map: "transactionHash_1")
+}
+
+model certtemplates {
+  id             String                        @id @default(auto()) @map("_id") @db.ObjectId
+  v              Int                           @map("__v")
+  createdAt      DateTime                      @db.Date
+  templateValues CerttemplatesTemplateValues[]
+  updatedAt      DateTime                      @db.Date
+}
+
+model courses {
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  v                Int               @map("__v")
+  course           String
+  courseName       String?
+  createdAt        DateTime          @db.Date
+  createdBy        String            @db.ObjectId
+  dateOfExpireCert String?
+  dateOfStudyEnd   String?
+  dateOfStudyStart String?
+  instituteId      String            @db.ObjectId
+  instituteName    String?
+  issueDate        String?
+  issueStatus      String?
+  layoutId         String?
+  signName         String?
+  signature        CoursesSignature?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  signatureArray   Json?
+  updatedAt        DateTime          @db.Date
+  updatedBy        String?           @db.ObjectId
+}
+
+model graduates {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  v                  Int      @map("__v")
+  certificateRevoked Boolean?
+  certificateUUID    String?
+  courseId           String   @db.ObjectId
+  createdAt          DateTime @db.Date
+  createdBy          String   @db.ObjectId
+  firstName          String?
+  instituteId        String   @db.ObjectId
+  lastName           String?
+  recipientEmail     String?
+  recipientName      String?
+  titleName          String?
+  updatedAt          DateTime @db.Date
+  updatedBy          String?  @db.ObjectId
+}
+
+model institutes {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int      @map("__v")
+  active        Boolean
+  createdAt     DateTime @db.Date
+  instituteAbbr String   @unique(map: "instituteAbbr_1")
+  instituteName String   @unique(map: "instituteName_1")
+  updatedAt     DateTime @db.Date
+}
+
+model users {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  v           Int      @map("__v")
+  active      Boolean
+  createdAt   DateTime @db.Date
+  email       String   @unique(map: "email_1")
+  instituteId String?  @db.ObjectId
+  name        String
+  password    String
+  role        String
+  updatedAt   DateTime @db.Date
+  userName    String?
+}
