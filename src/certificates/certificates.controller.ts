@@ -23,6 +23,12 @@ export class CertificatesController {
     return this.certificatesService.create(createCertificateDto);
   }
 
+  // @Post()
+  // create(@Body() createCertificateDto: any) {
+  //   console.log(createCertificateDto);
+  //   return this.certificatesService.create(createCertificateDto);
+  // }
+
   @Get()
   findAll() {
     return this.certificatesService.findAll();

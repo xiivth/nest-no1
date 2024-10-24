@@ -20,6 +20,13 @@ export class CertificatesService {
     });
   }
 
+  // create(createCertificateDto: any) {
+  //   console.log(createCertificateDto);
+  //   return this.prismaService.institutes.create({
+  //     data: createCertificateDto,
+  //   });
+  // }
+
   findAll() {
     return `This action returns all certificates`;
   }

@@ -8,9 +8,10 @@ import { CertificatesModule } from './certificates/certificates.module';
 import { EthersModule } from './shared/ethers/ethers.module';
 import { PrismaService } from './shared/prisma/prisma.service';
 import { PrismaModule } from './shared/prisma/prisma.module';
+import { InstitutesModule } from './institutes/institutes.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), EthersModule, CertificatesModule, PrismaModule],
+  imports: [ConfigModule.forRoot(), EthersModule, CertificatesModule, PrismaModule, InstitutesModule],
   controllers: [AppController, CatsController],
   providers: [AppService, CatsService, PrismaService],
 })
