@@ -10,6 +10,7 @@ import {
 import { InstitutesService } from './institutes.service';
 import { CreateInstituteDto } from './dto/create-institute.dto';
 import { UpdateInstituteDto } from './dto/update-institute.dto';
+import { DeleteInstituteDto } from './dto/delete-institute.dto';
 
 @Controller('institutes')
 export class InstitutesController {
@@ -28,7 +29,7 @@ export class InstitutesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.institutesService.findOne(+id);
+    return this.institutesService.findOne(id);
   }
 
   @Patch(':id')
@@ -36,11 +37,14 @@ export class InstitutesController {
     @Param('id') id: string,
     @Body() updateInstituteDto: UpdateInstituteDto,
   ) {
-    return this.institutesService.update(+id, updateInstituteDto);
+    return this.institutesService.update(id, updateInstituteDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.institutesService.remove(+id);
+  remove(
+    @Param('id') id: string,
+    @Body() deleteInstituteDto: DeleteInstituteDto,
+  ) {
+    return this.institutesService.remove(id, deleteInstituteDto);
   }
 }
