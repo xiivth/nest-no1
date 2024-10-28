@@ -18,11 +18,15 @@ export class UsersService {
   }
 
   findAll() {
-    return `This action returns all users`;
+    // return `This action returns all users`;
+    return this.prismaService.users.findMany();
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} user`;
+    // return `This action returns a #${id} user`;
+    return this.prismaService.users.findUnique({
+      where: { id },
+    });
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
