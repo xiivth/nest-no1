@@ -12,7 +12,14 @@ import { InstitutesModule } from './institutes/institutes.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), EthersModule, CertificatesModule, PrismaModule, InstitutesModule, UsersModule],
+  imports: [
+    ConfigModule.forRoot(),
+    EthersModule,
+    CertificatesModule,
+    PrismaModule,
+    InstitutesModule,
+    UsersModule,
+  ],
   controllers: [AppController, CatsController],
   providers: [AppService, CatsService, PrismaService],
 })
